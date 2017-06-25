@@ -1,6 +1,8 @@
 package mike.crawler;
 
 /**
+ * Class to crawl an entire domain and generate a sitemap.
+ *
  * Created by msett on 6/23/2017.
  */
 
@@ -49,7 +51,12 @@ public class DomainCrawler
         
         printPrettyReport(pagesCrawled);
     }
-    
+
+    /**
+     * Create a formatted report written to the console
+     *
+     * @param pagesCrawled Map of pages scanned
+     */
     private void printPrettyReport(Map<String, PageContent> pagesCrawled) {
         for (Map.Entry<String, PageContent> entry : pagesCrawled.entrySet()) {
             PageContent pageContent = entry.getValue();

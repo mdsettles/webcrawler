@@ -2,6 +2,7 @@ package mike.crawler;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
@@ -39,6 +40,11 @@ public class PageCrawler
             int newLinks = 0;
             for(Element link : links)
             {
+                // Don't want to include images in page links
+                if (isImage(link)) {
+                    continue;
+                }
+
                 // Format the url to exclude duplicates
                 String href = link.absUrl("href");
                 URL newUrl = new URL(href);
@@ -80,5 +86,23 @@ public class PageCrawler
         {
             System.out.println("Failed to crawlPage URL " + url);
         }
+    }
+
+    /**
+     * Determine if a link is for an image
+     *
+     * @param link link to check
+     * @return true if the link is an image link
+     */
+    private boolean isImage(Element link) {
+        boolean isImage = false;
+        for (Node node : link.childNodes()) {
+            if (node.nodeName().equals("img")) {
+                isImage = true;
+                break;
+            }
+        }
+
+        return isImage;
     }
 }
